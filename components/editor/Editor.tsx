@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { updateSession } from '@/lib/actions/writing'
 import { AISidebar } from './AISidebar'
+import { VersionHistory } from './VersionHistory'
 
 interface Session {
   id: string
@@ -23,6 +24,7 @@ export function Editor({ session }: EditorProps) {
   const [title, setTitle] = useState(session.title)
   const [content, setContent] = useState(session.content)
   const [saving, setSaving] = useState(false)
+  const [versions, setVersions] = useState<string[]>([])
 
   const titleRef = useRef(title)
   const contentRef = useRef(content)
@@ -62,7 +64,12 @@ export function Editor({ session }: EditorProps) {
     }
   }, [session.id])
 
+  function pushVersion(snapshot: string) {
+    setVersions((prev) => [snapshot, ...prev].slice(0, 10))
+  }
+
   function handleInsert(text: string) {
+    pushVersion(contentRef.current)
     setContent((prev) => {
       const next = prev ? prev + '\n\n' + text : text
       contentRef.current = next
@@ -73,8 +80,17 @@ export function Editor({ session }: EditorProps) {
   }
 
   function handleReplace(text: string) {
+    pushVersion(contentRef.current)
     setContent(text)
     contentRef.current = text
+    dirtyRef.current = true
+    scheduleSave()
+  }
+
+  function handleRestore(version: string) {
+    pushVersion(contentRef.current)
+    setContent(version)
+    contentRef.current = version
     dirtyRef.current = true
     scheduleSave()
   }
@@ -97,16 +113,19 @@ export function Editor({ session }: EditorProps) {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        <main className="flex flex-1 flex-col p-6" style={{ flex: '2 1 0' }}>
-          <Textarea
-            value={content}
-            onChange={(e) => {
-              setContent(e.target.value)
-              scheduleSave()
-            }}
-            placeholder="Empezá a escribir…"
-            className="h-full flex-1 resize-none border-none bg-transparent text-base shadow-none focus-visible:ring-0"
-          />
+        <main className="flex flex-1 flex-col overflow-y-auto" style={{ flex: '2 1 0' }}>
+          <div className="flex-1 p-6">
+            <Textarea
+              value={content}
+              onChange={(e) => {
+                setContent(e.target.value)
+                scheduleSave()
+              }}
+              placeholder="Empezá a escribir…"
+              className="h-full min-h-96 w-full resize-none border-none bg-transparent text-base shadow-none focus-visible:ring-0"
+            />
+          </div>
+          <VersionHistory versions={versions} onRestore={handleRestore} />
         </main>
 
         <aside className="overflow-y-auto" style={{ flex: '1 1 0' }}>
