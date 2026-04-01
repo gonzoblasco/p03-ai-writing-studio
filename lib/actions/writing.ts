@@ -80,6 +80,7 @@ export async function getSession(id: string) {
     .from('writing_sessions')
     .select('*')
     .eq('id', id)
+    .eq('user_id', user.id)
     .single()
 
   return { data, error: error?.message ?? null }
@@ -108,6 +109,7 @@ export async function deleteSession(id: string) {
     .from('writing_sessions')
     .delete()
     .eq('id', id)
+    .eq('user_id', user.id)
 
   return { error: error?.message ?? null }
 }
