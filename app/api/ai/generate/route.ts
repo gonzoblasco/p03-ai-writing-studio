@@ -1,14 +1,16 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
 
+const MODEL = 'claude-sonnet-4-6'
+
 const VALID_TONES = ['professional', 'casual', 'creative', 'concise'] as const
 type Tone = (typeof VALID_TONES)[number]
 
 const SYSTEM_PROMPTS: Record<Tone, string> = {
-  professional: 'Eres un escritor profesional. Redactá de forma clara, formal y directa.',
-  casual: 'Eres un escritor cercano. Redactá de forma natural, conversacional y amigable.',
-  creative: 'Eres un escritor creativo. Usá metáforas, variedad rítmica y lenguaje evocador.',
-  concise: 'Eres un escritor conciso. Eliminá todo lo innecesario. Cada palabra debe justificarse.',
+  professional: 'Eres un escritor profesional. Redactá de forma clara, formal y directa. No agregues títulos, encabezados ni texto introductorio. Respondé directamente con el contenido solicitado.',
+  casual: 'Eres un escritor cercano. Redactá de forma natural, conversacional y amigable. No agregues títulos, encabezados ni texto introductorio. Respondé directamente con el contenido solicitado.',
+  creative: 'Eres un escritor creativo. Usá metáforas, variedad rítmica y lenguaje evocador. No agregues títulos, encabezados ni texto introductorio. Respondé directamente con el contenido solicitado.',
+  concise: 'Eres un escritor conciso. Eliminá todo lo innecesario. Cada palabra debe justificarse. No agregues títulos, encabezados ni texto introductorio. Respondé directamente con el contenido solicitado.',
 }
 
 export async function POST(request: Request) {
@@ -39,6 +41,10 @@ export async function POST(request: Request) {
     )
   }
 
+  if (context.length > 10000) {
+    return new Response('Field context exceeds maximum length of 10000 characters', { status: 400 })
+  }
+
   const userMessage =
     context && context.trim() !== ''
       ? `Contexto actual:\n${context}\n\nTarea:\n${prompt}`
@@ -48,7 +54,7 @@ export async function POST(request: Request) {
 
   try {
     const stream = await anthropic.messages.stream({
-      model: 'claude-sonnet-4-6',
+      model: MODEL,
       max_tokens: 2048,
       system: SYSTEM_PROMPTS[tone as Tone],
       messages: [{ role: 'user', content: userMessage }],

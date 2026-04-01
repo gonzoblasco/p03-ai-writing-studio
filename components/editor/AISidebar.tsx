@@ -44,6 +44,7 @@ export function AISidebar({ context, onInsert, onReplace }: AISidebarProps) {
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
+        if (!value) break
         setOutput((prev) => prev + decoder.decode(value, { stream: true }))
       }
     } catch {

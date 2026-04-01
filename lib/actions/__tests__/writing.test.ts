@@ -4,7 +4,7 @@ vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn(),
 }))
 
-import { createSession, updateSession, deleteSession } from '../writing'
+import { createSession, updateSession, deleteSession, getSession } from '../writing'
 import { createClient } from '@/lib/supabase/server'
 
 const mockCreateClient = vi.mocked(createClient)
@@ -72,6 +72,21 @@ describe('updateSession', () => {
     const result = await updateSession('session-other', { title: 'Hacked' })
 
     expect(result).toEqual({ data: null, error: 'Sesión no encontrada o acceso denegado' })
+  })
+})
+
+describe('getSession', () => {
+  it('returns data null when session does not belong to the user', async () => {
+    mockCreateClient.mockResolvedValue(
+      buildSupabaseMock({
+        user: { id: 'user-123' },
+        fetchResult: { data: null, error: { message: 'Row not found' } },
+      }) as any
+    )
+
+    const result = await getSession('session-other')
+
+    expect(result.data).toBeNull()
   })
 })
 
