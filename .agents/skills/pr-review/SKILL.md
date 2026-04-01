@@ -1,6 +1,6 @@
 ---
 name: pr-review
-description: Usá este skill cuando necesites revisar un Pull Request o un conjunto de cambios antes de mergear. Se activa cuando el usuario dice "revisá este PR", "hacé code review", "revisá los cambios", o cuando hay una branch lista para review.
+description: Usá este skill cuando necesites revisar código. Se activa con "$pr-review", "review", "revisá los cambios", "code review", o "hacé el PR review".
 ---
 
 # PR Review
