@@ -17,3 +17,10 @@
 ## Notas de versión
 
 - Next.js 16: el archivo de middleware se llama `proxy.ts` (no `middleware.ts`)
+
+## P03 — AI Writing Studio
+
+- Streaming: /api/ai/generate con @anthropic-ai/sdk
+- Auth check en API routes: createClient().auth.getUser() antes de procesar
+- Model: claude-sonnet-4-6 (constante MODEL en route.ts)
+- Historial de versiones: in-memory con useState, no persistido

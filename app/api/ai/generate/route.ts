@@ -34,6 +34,10 @@ export async function POST(request: Request) {
     return new Response('Missing required field: prompt', { status: 400 })
   }
 
+  if (prompt.length > 4000) {
+    return new Response('Field prompt exceeds maximum length of 4000 characters', { status: 400 })
+  }
+
   if (!tone || !VALID_TONES.includes(tone as Tone)) {
     return new Response(
       `Invalid or missing field: tone. Must be one of: ${VALID_TONES.join(', ')}`,

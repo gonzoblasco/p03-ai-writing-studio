@@ -62,4 +62,24 @@ describe('POST /api/ai/generate', () => {
 
     expect(res.status).toBe(400)
   })
+
+  it('returns 400 when prompt exceeds 4000 characters', async () => {
+    mockCreateClient.mockResolvedValue(
+      buildSupabaseMock({ id: 'user-123' }) as any
+    )
+
+    const res = await POST(makeRequest({ prompt: 'a'.repeat(4001), tone: 'casual' }))
+
+    expect(res.status).toBe(400)
+  })
+
+  it('returns 400 when context exceeds 10000 characters', async () => {
+    mockCreateClient.mockResolvedValue(
+      buildSupabaseMock({ id: 'user-123' }) as any
+    )
+
+    const res = await POST(makeRequest({ prompt: 'hello', tone: 'casual', context: 'a'.repeat(10001) }))
+
+    expect(res.status).toBe(400)
+  })
 })
