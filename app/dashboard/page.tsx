@@ -1,7 +1,3 @@
-import { getTasks } from '@/lib/actions/tasks'
-import TaskList from '@/components/tasks/TaskList'
-
-export default async function DashboardPage() {
-  const tasks = await getTasks()
-  return <TaskList tasks={tasks} />
+export default function DashboardPage() {
+  return <div>Dashboard P03 — coming soon</div>
 }
