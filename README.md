@@ -8,7 +8,7 @@ Este proyecto forma parte del currículum **Full Stack AI Developer (P03)**.
 
 ## ✨ Características Principales
 
-- **🤖 AI Streaming**: Generación de contenido en tiempo real utilizando la API de Anthropic (Claude 3.5 Sonnet).
+- **🤖 AI Streaming**: Generación de contenido en tiempo real utilizando la API de Anthropic (Claude Sonnet 4.6).
 - **🎭 Control de Tono**: Selector dinámico de 4 personalidades (Profesional, Casual, Creativo, Conciso) que ajustan el comportamiento de la IA.
 - **🔄 Historial de Versiones**: Sistema de control de versiones en memoria para restaurar estados anteriores del texto tras cada intervención de la IA.
 - **📂 Gestión de Sesiones**: CRUD completo de sesiones de escritura persistidas en Supabase.
