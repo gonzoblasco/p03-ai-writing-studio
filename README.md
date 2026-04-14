@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✍️ AI Writing Studio (P03)
 
-## Getting Started
+Un editor de texto minimalista y potente potenciado por Inteligencia Artificial, diseñado para potenciar el proceso de escritura mediante streaming de contenido en tiempo real y gestión de versiones.
 
-First, run the development server:
+Este proyecto forma parte del currículum **Full Stack AI Developer (P03)**.
+
+---
+
+## ✨ Características Principales
+
+- **🤖 AI Streaming**: Generación de contenido en tiempo real utilizando la API de Anthropic (Claude 3.5 Sonnet).
+- **🎭 Control de Tono**: Selector dinámico de 4 personalidades (Profesional, Casual, Creativo, Conciso) que ajustan el comportamiento de la IA.
+- **🔄 Historial de Versiones**: Sistema de control de versiones en memoria para restaurar estados anteriores del texto tras cada intervención de la IA.
+- **📂 Gestión de Sesiones**: CRUD completo de sesiones de escritura persistidas en Supabase.
+- **🔒 Seguridad Robusta**: Autenticación de usuarios y Row Level Security (RLS) para garantizar que cada usuario solo acceda a su contenido.
+- **⚡ Interfaz Moderna**: Diseño limpio y profesional construido con Next.js 16, Tailwind CSS y componentes de shadcn/ui.
+
+## 🛠️ Stack Tecnológico
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Lenguaje**: [TypeScript](https://www.typescriptlang.org/)
+- **IA**: [Anthropic SDK](https://github.com/anthropics/anthropic-sdk-typescript) & [Vercel AI SDK](https://sdk.vercel.ai/docs)
+- **Backend / DB**: [Supabase](https://supabase.com/) (Auth + PostgreSQL)
+- **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- **Testing**: [Vitest](https://vitest.dev/)
+
+---
+
+## 🚀 Empezando
+
+### Requisitos Previos
+
+- Node.js (v20 o superior)
+- Cuenta en Supabase
+- API Key de Anthropic
+
+### Instalación
+
+1.  **Clona el repositorio**:
+    ```bash
+    git clone https://github.com/tu-usuario/p03-ai-writing-studio.git
+    cd p03-ai-writing-studio
+    ```
+
+2.  **Instala las dependencias**:
+    ```bash
+    npm install
+    ```
+
+3.  **Configura las variables de entorno**:
+    Crea un archivo `.env.local` en la raíz y añade tus credenciales:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
+    SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+    ANTHROPIC_API_KEY=tu_api_key_de_anthropic
+    ```
+
+4.  **Configura la base de datos**:
+    Ejecuta el contenido de `schema.sql` en el SQL Editor de tu proyecto de Supabase para crear las tablas y políticas de RLS necesarias.
+
+5.  **Inicia el servidor de desarrollo**:
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📂 Organización del Proyecto
+
+- `/app`: Rutas del App Router (dashboard protegido, API de IA, auth).
+- `/components`: Componentes de UI reutilizables y módulos específicos del editor.
+- `/lib`: Lógica compartida, acciones de servidor (`actions/`) y clientes de servicios (`supabase/`).
+- `/public`: Activos estáticos.
+- `schema.sql`: Definición de la estructura de la base de datos y políticas de seguridad.
+
+## 🧪 Testing
+
+El proyecto utiliza Vitest para asegurar la integridad de las acciones de servidor y validaciones:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Desarrollado como parte del programa Full Stack AI Developer.*

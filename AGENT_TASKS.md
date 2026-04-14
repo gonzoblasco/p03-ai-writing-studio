@@ -26,24 +26,24 @@ versiones por sesión.
 
 ### 1. Instalar dependencias nuevas
 
-- [ ] `npm install @anthropic-ai/sdk ai`
-- [ ] Agregar `ANTHROPIC_API_KEY` a `.env.local`
+- [x] `npm install @anthropic-ai/sdk ai`
+- [x] Agregar `ANTHROPIC_API_KEY` a `.env.local`
 
 ### 2. Schema Supabase
 
-- [ ] Crear tabla `writing_sessions`:
+- [x] Crear tabla `writing_sessions`:
   - `id` uuid PK
   - `user_id` uuid FK → auth.users
   - `title` text
   - `content` text
   - `created_at` timestamptz
   - `updated_at` timestamptz
-- [ ] RLS: usuario solo accede a sus propias sesiones
-- [ ] `schema.sql` con el SQL listo para ejecutar en Supabase
+- [x] RLS: usuario solo accede a sus propias sesiones
+- [x] `schema.sql` con el SQL listo para ejecutar en Supabase
 
 ### 3. API Route — streaming endpoint
 
-- [ ] `app/api/ai/generate/route.ts`
+- [x] `app/api/ai/generate/route.ts`
   - Acepta `{ prompt, tone, context }` via POST
   - `tone`: 'professional' | 'casual' | 'creative' | 'concise'
   - System prompt dinámico según tono
@@ -52,7 +52,7 @@ versiones por sesión.
 
 ### 4. Server Actions — writing sessions
 
-- [ ] `lib/actions/writing.ts`:
+- [x] `lib/actions/writing.ts`:
   - `createSession(title)` → crea sesión vacía
   - `updateSession(id, content)` → guarda contenido
   - `getSessions()` → lista sesiones del usuario
@@ -61,30 +61,30 @@ versiones por sesión.
 
 ### 5. UI — Editor principal
 
-- [ ] `app/dashboard/page.tsx` — lista de sesiones (Server Component)
-- [ ] `app/dashboard/[id]/page.tsx` — editor individual (Server Component)
-- [ ] `components/editor/Editor.tsx` — textarea principal (Client Component)
-- [ ] `components/editor/AISidebar.tsx` — panel de IA con controles (Client Component)
-- [ ] `components/editor/ToneSelector.tsx` — selector de 4 tonos (Client Component)
-- [ ] `components/editor/VersionHistory.tsx` — historial en-memoria (Client Component)
+- [x] `app/dashboard/page.tsx` — lista de sesiones (Server Component)
+- [x] `app/dashboard/[id]/page.tsx` — editor individual (Server Component)
+- [x] `components/editor/Editor.tsx` — textarea principal (Client Component)
+- [x] `components/editor/AISidebar.tsx` — panel de IA con controles (Client Component)
+- [x] `components/editor/ToneSelector.tsx` — selector de 4 tonos (Client Component)
+- [x] `components/editor/VersionHistory.tsx` — historial en-memoria (Client Component)
 
 ### 6. Feature de streaming
 
-- [ ] `AISidebar` usa `useCompletion` de Vercel AI SDK apuntando a `/api/ai/generate`
-- [ ] Streaming visible token a token en el sidebar
-- [ ] Botón "Insertar" copia el output al editor
-- [ ] Botón "Reemplazar selección" reemplaza el texto seleccionado en el editor
+- [x] `AISidebar` usa `useCompletion` de Vercel AI SDK apuntando a `/api/ai/generate`
+- [x] Streaming visible token a token en el sidebar
+- [x] Botón "Insertar" copia el output al editor
+- [x] Botón "Reemplazar selección" reemplaza el texto seleccionado en el editor
 
 ### 7. Historial de versiones
 
-- [ ] En-memoria durante la sesión (no persistido en DB)
-- [ ] Cada vez que se inserta/reemplaza texto de IA, se guarda el estado anterior
-- [ ] UI muestra hasta 10 versiones anteriores con botón "Restaurar"
+- [x] En-memoria durante la sesión (no persistido en DB)
+- [x] Cada vez que se inserta/reemplaza texto de IA, se guarda el estado anterior
+- [x] UI muestra hasta 10 versiones anteriores con botón "Restaurar"
 
 ### 8. Tests
 
-- [ ] `lib/actions/__tests__/writing.test.ts` — ownership checks en update/delete
-- [ ] Test del endpoint `/api/ai/generate` — auth check y validación de tone
+- [x] `lib/actions/__tests__/writing.test.ts` — ownership checks en update/delete
+- [x] Test del endpoint `/api/ai/generate` — auth check y validación de tone
 
 ## Contexto adicional
 
